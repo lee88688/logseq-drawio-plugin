@@ -1,8 +1,25 @@
 import { BlockCommandCallback } from '@logseq/libs/dist/LSPlugin'
 import { DrawioManager, PublicEvents } from './DrawioManager'
 
+interface LogseqDomEvent {
+  id: string
+  type: string
+  dataset: Record<string, string>
+}
+
+const rendererContentReg = (fileName: string) =>
+  new RegExp(`\\{\\{renderer\\s*:drawio,\\s*${fileName}\\}\\}`, 'i')
+
 function isValidFileName(name: string) {
   return /\.(drawio|svg)/i.test(name)
+}
+
+function showSaveMessage() {
+  logseq.UI.showMsg('file saved')
+}
+
+function createRenderer(fileName: string) {
+  return `{{renderer :drawio, ${fileName}}}`
 }
 
 export const importFile: BlockCommandCallback = async () => {
@@ -25,9 +42,7 @@ export const importFile: BlockCommandCallback = async () => {
       }
       const content = await file.text()
       await storage.setItem(fileName, content)
-      await logseq.Editor.insertAtEditingCursor(
-        `{{renderer :mhtml, ${fileName}}}`
-      )
+      await logseq.Editor.insertAtEditingCursor(createRenderer(fileName))
       resolve()
     })
     // todo: when user not select file will reject too.
@@ -41,12 +56,23 @@ export const createFile = async (
   drawioManager: DrawioManager
 ) => {
   const storage = logseq.Assets.makeSandboxStorage()
+  let fileName = ''
   const handleSave = async (data: string) => {
     // save file
-    const fileName = `${Date.now()}.svg`
+    if (!fileName) {
+      fileName = `${Date.now()}.svg`
+      // const block = await logseq.Editor.getBlock(uuid)
+      // await logseq.Editor.updateBlock(
+      //   uuid,
+      //   block?.content + createRenderer(fileName)
+      // )
+      await logseq.Editor.editBlock(uuid, { pos: 0 })
+      await logseq.Editor.insertAtEditingCursor(createRenderer(fileName))
+    }
+
     await storage.setItem(fileName, data)
-    await logseq.Editor.editBlock(uuid, { pos: 0 })
-    logseq.Editor.insertAtEditingCursor(`{{renderer :drawio, ${fileName}}}`)
+
+    showSaveMessage()
   }
   drawioManager.on(PublicEvents.Save, handleSave)
   drawioManager.once(PublicEvents.Exit, () => {
@@ -55,7 +81,46 @@ export const createFile = async (
     logseq.hideMainUI()
   })
 
-  await drawioManager.open()
   logseq.showMainUI()
+  await drawioManager.open()
   drawioManager.showTemplate()
+}
+
+export const openFile = async (
+  e: LogseqDomEvent,
+  drawioManager: DrawioManager
+) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+
+  const fileName = e.dataset.fileName
+  const uuid = e.dataset.uuid
+  const content = await storage.getItem(fileName)
+  await drawioManager.open(content)
+  logseq.showMainUI()
+
+  const saveFn = (data: string) => {
+    storage.setItem(fileName, data)
+    showSaveMessage()
+  }
+  drawioManager.on(PublicEvents.Save, saveFn)
+  drawioManager.once(PublicEvents.Exit, () => {
+    drawioManager.off(PublicEvents.Save, saveFn)
+    logseq.hideMainUI()
+    logseq.Editor.editBlock(uuid)
+  })
+}
+
+export const removeFile = async (e: LogseqDomEvent) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+
+  const fileName = e.dataset.fileName
+  const uuid = e.dataset.uuid
+
+  await storage.removeItem(fileName)
+
+  const block = await logseq.Editor.getBlock(uuid)
+  if (!block) return
+
+  const content = block.content.replace(rendererContentReg(fileName), '')
+  logseq.Editor.updateBlock(uuid, content)
 }

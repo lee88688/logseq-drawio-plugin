@@ -23,6 +23,7 @@ interface UrlConfig {
   dark: DarkMode
   embed: '1'
   proto: 'json'
+  spin: '1'
 }
 
 type Action =
@@ -33,6 +34,7 @@ type Action =
   | {
       action: 'export'
       format: 'xmlsvg' | 'xmlpng'
+      [key: string]: string
     }
   | {
       action: 'template'
@@ -49,7 +51,8 @@ class ConfigManager {
     ui: UiMode.Kennedy,
     dark: DarkMode.Auto,
     embed: '1',
-    proto: 'json'
+    proto: 'json',
+    spin: '1'
   }
 
   constructor(private baseUrl: string) {}
@@ -82,7 +85,11 @@ export class DrawioManager extends EventEmitter {
   }
 
   private handleSave = async () => {
-    this.sendAction({ action: 'export', format: 'xmlsvg' })
+    this.sendAction({
+      action: 'export',
+      format: 'xmlsvg',
+      background: 'transparent'
+    })
     const exportEvent = (await this.waitFor('export')) as ExportEvent
     const index = exportEvent.data.indexOf(',')
     const base64 = exportEvent.data.slice(index + 1)
@@ -144,12 +151,4 @@ export class DrawioManager extends EventEmitter {
   showTemplate() {
     this.sendAction({ action: 'template' })
   }
-
-  // destroy() {
-  //   this.ready = false
-  //   window.removeEventListener('message', this.handleMessageEvent)
-  //   this.messageEventEmitter.removeAllListeners()
-  //   this.removeAllListeners()
-  //   this.iframeEl && document.body.removeChild(this.iframeEl)
-  // }
 }

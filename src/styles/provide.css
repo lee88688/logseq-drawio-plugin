@@ -8,13 +8,17 @@
     cursor: default;
 }
 
+.drawio-plugin__preview > svg {
+    max-width: 100%;
+}
+
 .drawio-plugin__toolbar {
     display: none;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    @apply backdrop-blur;
+    @apply backdrop-blur-3xl;
 }
 
 .drawio-plugin__preview:hover .drawio-plugin__toolbar {

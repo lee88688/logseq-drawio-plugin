@@ -15,7 +15,7 @@ export default defineConfig({
           dest: 'drawio'
         },
         {
-          src: 'drawio/src/main/webapp/(styles|images|img|resources|mxgraph)',
+          src: 'drawio/src/main/webapp/(styles|images|img|resources|mxgraph|templates)',
           dest: 'drawio'
         },
         // math
