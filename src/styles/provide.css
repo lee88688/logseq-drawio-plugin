@@ -1,0 +1,37 @@
+.drawio-plugin__preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    max-width: 100%;
+    cursor: default;
+}
+
+.drawio-plugin__toolbar {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    @apply backdrop-blur;
+}
+
+.drawio-plugin__preview:hover .drawio-plugin__toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.drawio-plugin__toolbar-actions {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.drawio-plugin__toolbar-actions button {
+    display: inline-flex;
+    cursor: pointer;
+    @apply mx-1;
+}

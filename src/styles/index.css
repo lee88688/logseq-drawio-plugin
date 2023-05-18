@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+iframe {
+    @apply p-0 m-0 fixed top-0 left-0;
+    width: 100vw;
+    height: 100vh;
+}
+
