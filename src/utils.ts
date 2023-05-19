@@ -1,7 +1,9 @@
 import { BlockCommandCallback } from '@logseq/libs/dist/LSPlugin'
 import { DrawioManager, PublicEvents } from './DrawioManager'
+import { PreviewManager } from './PreviewManager'
+import { SpinnerManager } from './SpinnerManager'
 
-interface LogseqDomEvent {
+export interface LogseqDomEvent {
   id: string
   type: string
   dataset: Record<string, string>
@@ -22,11 +24,15 @@ function createRenderer(fileName: string) {
   return `{{renderer :drawio, ${fileName}}}`
 }
 
-export const importFile: BlockCommandCallback = async () => {
+export const importFile = async (
+  uuid: string,
+  drawioManager: DrawioManager,
+  spinnerManager: SpinnerManager
+) => {
   const storage = logseq.Assets.makeSandboxStorage()
   const input = document.createElement('input')
   input.type = 'file'
-  return new Promise<void>((resolve, reject) => {
+  const svg = await new Promise<string>((resolve, reject) => {
     input.addEventListener('change', async () => {
       const file = input.files?.[0]
       if (!file || !isValidFileName(file.name)) {
@@ -41,31 +47,18 @@ export const importFile: BlockCommandCallback = async () => {
         return
       }
       const content = await file.text()
-      await storage.setItem(fileName, content)
-      await logseq.Editor.insertAtEditingCursor(createRenderer(fileName))
-      resolve()
+      resolve(content)
     })
     // todo: when user not select file will reject too.
 
     input.click()
   })
-}
 
-export const createFile = async (
-  uuid: string,
-  drawioManager: DrawioManager
-) => {
-  const storage = logseq.Assets.makeSandboxStorage()
   let fileName = ''
   const handleSave = async (data: string) => {
     // save file
     if (!fileName) {
       fileName = `${Date.now()}.svg`
-      // const block = await logseq.Editor.getBlock(uuid)
-      // await logseq.Editor.updateBlock(
-      //   uuid,
-      //   block?.content + createRenderer(fileName)
-      // )
       await logseq.Editor.editBlock(uuid, { pos: 0 })
       await logseq.Editor.insertAtEditingCursor(createRenderer(fileName))
     }
@@ -82,21 +75,78 @@ export const createFile = async (
   })
 
   logseq.showMainUI()
-  await drawioManager.open()
+  spinnerManager.show()
+  try {
+    await drawioManager.open(svg)
+  } catch (e) {
+    console.log('create file failed', e)
+    logseq.hideMainUI()
+  } finally {
+    spinnerManager.hide()
+  }
+}
+
+export const createFile = async (
+  uuid: string,
+  drawioManager: DrawioManager,
+  spinnerManager: SpinnerManager
+) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+  let fileName = ''
+  const handleSave = async (data: string) => {
+    // save file
+    if (!fileName) {
+      fileName = `${Date.now()}.svg`
+      await logseq.Editor.editBlock(uuid, { pos: 0 })
+      await logseq.Editor.insertAtEditingCursor(createRenderer(fileName))
+    }
+
+    await storage.setItem(fileName, data)
+
+    showSaveMessage()
+  }
+  drawioManager.on(PublicEvents.Save, handleSave)
+  drawioManager.once(PublicEvents.Exit, () => {
+    console.log('off save event')
+    drawioManager.off(PublicEvents.Save, handleSave)
+    logseq.hideMainUI()
+  })
+
+  logseq.showMainUI()
+  spinnerManager.show()
+  try {
+    await drawioManager.open()
+  } catch (e) {
+    console.log('create file failed', e)
+    logseq.hideMainUI()
+  } finally {
+    spinnerManager.hide()
+  }
   drawioManager.showTemplate()
 }
 
 export const openFile = async (
   e: LogseqDomEvent,
-  drawioManager: DrawioManager
+  drawioManager: DrawioManager,
+  spinnerManager: SpinnerManager
 ) => {
   const storage = logseq.Assets.makeSandboxStorage()
 
   const fileName = e.dataset.fileName
   const uuid = e.dataset.uuid
   const content = await storage.getItem(fileName)
-  await drawioManager.open(content)
+
+  spinnerManager.show()
   logseq.showMainUI()
+  try {
+    await drawioManager.open(content)
+  } catch (e) {
+    console.error('open drawio failed', e)
+    logseq.hideMainUI()
+    return
+  } finally {
+    spinnerManager.hide()
+  }
 
   const saveFn = (data: string) => {
     storage.setItem(fileName, data)
@@ -123,4 +173,26 @@ export const removeFile = async (e: LogseqDomEvent) => {
 
   const content = block.content.replace(rendererContentReg(fileName), '')
   logseq.Editor.updateBlock(uuid, content)
+}
+
+export const preview = async (
+  e: LogseqDomEvent,
+  previewManager: PreviewManager
+) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+
+  const fileName = e.dataset.fileName
+
+  const svg = await storage.getItem(fileName)
+  if (!svg) {
+    logseq.UI.showMsg(`file(${fileName}) is not found!`, 'error')
+    return
+  }
+
+  logseq.showMainUI()
+  previewManager.show(svg)
+
+  previewManager.once(PreviewManager.HideEventName, () => {
+    logseq.hideMainUI()
+  })
 }

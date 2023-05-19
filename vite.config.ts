@@ -1,4 +1,4 @@
-import reactPlugin from '@vitejs/plugin-react'
+// import reactPlugin from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import logseqDevPlugin from 'vite-plugin-logseq'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
@@ -7,7 +7,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 export default defineConfig({
   plugins: [
     logseqDevPlugin(),
-    reactPlugin(),
+    // reactPlugin(),
     viteStaticCopy({
       targets: [
         {
