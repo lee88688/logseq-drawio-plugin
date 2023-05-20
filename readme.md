@@ -1,14 +1,15 @@
-# Logseq Plugin Template React 🚀
+# Logseq Drawio Plugin
+
+Using drawio diagrams in Logseq.
 
 ## Features
 
-- Plug-and-play boilerplate with properly defined GitHub action defaults
-- Develop with HMR, empowered by lightning-fast Vite ⚡ with [vite-logseq-plugin](https://github.com/pengx17/vite-plugin-logseq)
-- TailwindCSS for styling
-- Pnpm
+- Create drawio file
+- Import exiting drawio file
+- Preview in block and in maximize layout
 
 ## How to get started
-1. Clone the repository or use the button "Use this template" on GitHub to create your own version of the repository 🔨
+1. Clone the repository and submodule.
 2. Make sure you have pnpm installed, [install](https://pnpm.io/installation) if necessary 🛠
 3. Execute `pnpm install` 📦
 4. Change the plugin-name in `package.json` to your liking. Adapt both the package-name and the plugin-id at the bottom of the `package.json`. Make sure that they are not conflicting with plugins you already installed. 📝
