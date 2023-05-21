@@ -11,7 +11,11 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'drawio/src/main/webapp/index.html',
+          src: [
+            'drawio/src/main/webapp/index.html',
+            'drawio/src/main/webapp/shortcuts.svg',
+            'drawio/LICENSE'
+          ],
           dest: 'drawio'
         },
         {

@@ -1,33 +1,33 @@
 module.exports = {
-  branches: ["master"],
+  branches: ['master'],
   plugins: [
     [
-      "@semantic-release/commit-analyzer",
+      '@semantic-release/commit-analyzer',
       {
-        preset: "conventionalcommits",
-      },
+        preset: 'conventionalcommits'
+      }
     ],
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    '@semantic-release/release-notes-generator',
+    '@semantic-release/changelog',
     [
-      "@semantic-release/npm",
+      '@semantic-release/npm',
       {
-        npmPublish: false,
-      },
+        npmPublish: false
+      }
     ],
-    "@semantic-release/git",
+    '@semantic-release/git',
     [
-      "@semantic-release/exec",
+      '@semantic-release/exec',
       {
         prepareCmd:
-          "zip -qq -r logseq-plugin-template-react-${nextRelease.version}.zip dist readme.md logo.svg LICENSE package.json",
-      },
+          'zip -qq -r logseq-drawio-plugin-${nextRelease.version}.zip dist readme.md logo.png LICENSE package.json'
+      }
     ],
     [
-      "@semantic-release/github",
+      '@semantic-release/github',
       {
-        assets: "logseq-plugin-template-react-*.zip",
-      },
-    ],
-  ],
-};
+        assets: 'logseq-drawio-plugin-*.zip'
+      }
+    ]
+  ]
+}
