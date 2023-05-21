@@ -2,6 +2,8 @@
 
 Using drawio diagrams in Logseq.
 
+![example use](./example.gif)
+
 ## Features
 
 - Create drawio file
