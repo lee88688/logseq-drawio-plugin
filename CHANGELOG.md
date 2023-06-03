@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.1...v1.0.2) (2023-06-03)
+
+
+### Bug Fixes
+
+* [#1](https://github.com/lee88688/logseq-drawio-plugin/issues/1) change zindex to 100, prevent other elements covering ([aaa8d41](https://github.com/lee88688/logseq-drawio-plugin/commit/aaa8d41bd0e57f86a5900bd32cf4199e388e7c54))
+
 ## [1.0.1](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.0...v1.0.1) (2023-05-21)
 
 
