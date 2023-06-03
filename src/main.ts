@@ -43,7 +43,7 @@ function main() {
 
     logseq.provideModel(createModel())
     logseq.setMainUIInlineStyle({
-      zIndex: 11
+      zIndex: 100
     })
 
     // const openIconName = 'drawio-plugin-open'
