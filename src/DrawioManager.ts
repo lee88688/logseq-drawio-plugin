@@ -112,6 +112,16 @@ export class DrawioManager extends EventEmitter {
     this.messageEventEmitter.on('init', () => (this.ready = true))
     this.messageEventEmitter.on('save', this.handleSave)
     this.messageEventEmitter.on('exit', this.handleExit)
+
+    // document
+    //   .getElementById('window-minimize')
+    //   ?.addEventListener('click', () => logseq)
+    // document
+    //   .getElementById('window-maximize')
+    //   ?.addEventListener('click', () => logseq)
+    // document
+    //   .getElementById('window-close')
+    //   ?.addEventListener('click', () => logseq)
   }
 
   async waitFor(type: string) {
@@ -128,16 +138,23 @@ export class DrawioManager extends EventEmitter {
 
   createFrame() {
     this.iframeEl = document.createElement('iframe')
-    document.body.appendChild(this.iframeEl)
+    const node = document.getElementById('iframe-inner')!
+    node.appendChild(this.iframeEl)
   }
 
   hideFrame() {
+    document.getElementById('iframe-wrap')?.style.setProperty('display', 'none')
     this.iframeEl?.setAttribute('style', 'display: none;')
     this.iframeEl?.removeAttribute('src')
   }
 
   showFrame() {
     if (!this.iframeEl) this.createFrame()
+    const wrap = document.getElementById('iframe-wrap')
+    wrap?.style.setProperty('display', 'block')
+    const height =
+      window.top?.document.getElementById('head')?.offsetHeight ?? 0
+    wrap?.style.setProperty('--iframe-top', `${height}px`)
     this.iframeEl?.removeAttribute('style')
     this.iframeEl?.setAttribute('src', this.configManager.url)
   }

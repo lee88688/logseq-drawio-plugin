@@ -23,6 +23,20 @@
         </div>
       </div>
     </div>
+    <div id="iframe-wrap" class="p-0 m-0 fixed top-0 left-0 w-screen h-screen">
+      <div class="window-control">
+        <button id="window-minimize" class="window-control-button">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="icon"><path d="M14 8v1H3V8h11z"></path></svg>
+        </button>
+        <button id="window-maximize" class="window-control-button">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="icon"><path d="M3 5v9h9V5H3zm8 8H4V6h7v7z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5 5h1V4h7v7h-1v1h2V3H5v2z"></path></svg>
+        </button>
+        <button id="window-close" class="window-control-button">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z"></path></svg>
+        </button>
+      </div>
+      <div id="iframe-inner"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
