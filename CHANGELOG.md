@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.2...v1.0.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* menu is too close to window bar which causes some menus cannot be clicked. ([bc16549](https://github.com/lee88688/logseq-drawio-plugin/commit/bc16549a5f5e5f70047f7e6870eb34e2bad11a34))
+
 ## [1.0.2](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.1...v1.0.2) (2023-06-03)
 
 
