@@ -152,9 +152,7 @@ export class DrawioManager extends EventEmitter {
     if (!this.iframeEl) this.createFrame()
     const wrap = document.getElementById('iframe-wrap')
     wrap?.style.setProperty('display', 'block')
-    const height =
-      window.top?.document.getElementById('head')?.offsetHeight ?? 0
-    wrap?.style.setProperty('--iframe-top', `${height}px`)
+    logseq.App.queryElementRect('#head').then(rect => wrap?.style.setProperty('--iframe-top', `${rect?.height ?? 0}px`))
     this.iframeEl?.removeAttribute('style')
     this.iframeEl?.setAttribute('src', this.configManager.url)
   }
