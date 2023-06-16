@@ -12,6 +12,7 @@
   "dependencies": {
     "@logseq/libs": "^0.0.14",
     "eventemitter3": "^5.0.1",
+    "js-base64": "^3.7.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

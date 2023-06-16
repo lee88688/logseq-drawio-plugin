@@ -1,4 +1,5 @@
 import EventEmitter from 'eventemitter3'
+import { decode } from 'js-base64'
 
 enum UiMode {
   Kennedy = 'kennedy',
@@ -93,7 +94,7 @@ export class DrawioManager extends EventEmitter {
     const exportEvent = (await this.waitFor('export')) as ExportEvent
     const index = exportEvent.data.indexOf(',')
     const base64 = exportEvent.data.slice(index + 1)
-    this.emit(PublicEvents.Save, atob(base64))
+    this.emit(PublicEvents.Save, decode(base64))
   }
 
   private handleExit = async () => {
