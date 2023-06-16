@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.4...v1.0.5) (2023-06-16)
+
+
+### Bug Fixes
+
+* [#2](https://github.com/lee88688/logseq-drawio-plugin/issues/2) use js-base64 to decode. atob cannot decode uft-8 or unicode string. ([64dc487](https://github.com/lee88688/logseq-drawio-plugin/commit/64dc48707503d2a39ec4e1b34bff14263056892c))
+
 ## [1.0.4](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.3...v1.0.4) (2023-06-15)
 
 
