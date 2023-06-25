@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.5...v1.0.6) (2023-06-25)
+
+
+### Bug Fixes
+
+* window bar drag region may cover menus ([eb8ed70](https://github.com/lee88688/logseq-drawio-plugin/commit/eb8ed70d68f1e332c88feeab431a7d19721b5ada))
+
 ## [1.0.5](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.4...v1.0.5) (2023-06-16)
 
 
