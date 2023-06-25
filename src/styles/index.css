@@ -8,7 +8,8 @@
 
 #iframe-inner {
     @apply p-0 m-0 absolute left-0 right-0 bottom-0 w-full;
-    top: var(--iframe-top, 0)
+    top: var(--iframe-top, 0);
+    -webkit-app-region: no-drag;
 }
 
 iframe {
@@ -19,6 +20,7 @@ iframe {
     @apply flex flex-row justify-end items-stretch;
     background-color: #f1f3f4;
     height: var(--iframe-top);
+    -webkit-app-region: drag;
 }
 
 .window-control-button {
