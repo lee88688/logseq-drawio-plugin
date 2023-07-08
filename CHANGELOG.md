@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.6...v1.1.0) (2023-07-08)
+
+
+### Bug Fixes
+
+* first preview can not use mouse to operate ([ab947d3](https://github.com/lee88688/logseq-drawio-plugin/commit/ab947d33972b8c74b0781d2c1705aea89e83b2e6))
+
+
+### Features
+
+* add download button to block preview ([8031718](https://github.com/lee88688/logseq-drawio-plugin/commit/80317181cb3389d913846ae7d4acb977301b8a91))
+* full page preview can use mouse to move draw ([66bf733](https://github.com/lee88688/logseq-drawio-plugin/commit/66bf733ab1816846c5b74e0209f72331548ae716))
+
 ## [1.0.6](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.5...v1.0.6) (2023-06-25)
 
 
