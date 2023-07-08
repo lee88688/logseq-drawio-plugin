@@ -11,9 +11,9 @@
       <button id="close" class="z-10 fixed top-4 right-4 p-0 m-0 fill-gray-50">
         <svg aria-hidden="true" class="pswp__icn" viewBox="0 0 32 32" width="32" height="32"><use class="pswp__icn-shadow" xlink:href="#pswp__icn-close"></use><path d="M24 10l-2-2-6 6-6-6-2 2 6 6-6 6 2 2 6-6 6 6 2-2-6-6z" id="pswp__icn-close"></path></svg>
       </button>
-      <div class="fixed w-screen h-screen flex justify-center items-center">
-        <div id="svg-container" class="bg-white scale-1 transition-transform">
-       </div>
+      <div class="fixed w-screen h-screen flex justify-center items-center select-none">
+        <div id="svg-container" style="transform: scale(var(--preview-scale, 1)) translate(var(--preview-move-x, 0px), var(--preview-move-y, 0px))" class="bg-white scale-1 transition-transform ease-linear duration-75">
+        </div>
       </div>
     </div>
     <div id="spinner" class="hidden transition-all duration-300 ease-in-out fixed top-0 left-0 z-[1040] bg-black w-screen h-screen" style="background-color: rgba(0, 0, 0, 0.5);">
