@@ -196,3 +196,28 @@ export const preview = async (
     logseq.hideMainUI()
   })
 }
+
+export const download = async (e: LogseqDomEvent) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+
+  const fileName = e.dataset.fileName
+
+  const svg = await storage.getItem(fileName)
+
+  if (!svg) {
+    logseq.UI.showMsg(`file(${fileName}) is not found!`, 'error')
+    return
+  }
+
+  // download
+  const file = new Blob([svg])
+  const url = URL.createObjectURL(file)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.click()
+  setTimeout(() => {
+    URL.revokeObjectURL(url)
+    a.href = ''
+  })
+}
