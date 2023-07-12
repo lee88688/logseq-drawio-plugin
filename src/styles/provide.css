@@ -12,13 +12,22 @@
     max-width: 100%;
 }
 
+.drawio-plugin__preview > .overlay {
+    display: none;
+    @apply absolute left-0 right-0 top-0 bottom-0;
+    background-image: linear-gradient(var(--ls-primary-background-color),transparent);
+}
+
+.drawio-plugin__preview:hover > .overlay {
+    display: block;
+}
+
 .drawio-plugin__toolbar {
     display: none;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    @apply backdrop-blur-3xl;
 }
 
 .drawio-plugin__preview:hover .drawio-plugin__toolbar {
