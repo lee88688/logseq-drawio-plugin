@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.1.0...v1.1.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* toolbar buttons may be hard to see when in some theme. [#3](https://github.com/lee88688/logseq-drawio-plugin/issues/3) ([0dca149](https://github.com/lee88688/logseq-drawio-plugin/commit/0dca149cbcd0e9d804fa32f841912767c2c42dee))
+
 # [1.1.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.0.6...v1.1.0) (2023-07-08)
 
 
