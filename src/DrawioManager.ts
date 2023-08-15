@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3'
 import { decode } from 'js-base64'
 
-enum UiMode {
+export enum UiMode {
   Kennedy = 'kennedy',
   Min = 'min',
   Sketch = 'sketch',
@@ -19,12 +19,17 @@ export enum PublicEvents {
   Exit = 'exit'
 }
 
-interface UrlConfig {
+class UrlConfig {
   ui: UiMode
   dark: DarkMode
-  embed: '1'
-  proto: 'json'
-  spin: '1'
+  embed = '1'
+  proto = 'json'
+  spin = '1'
+
+  constructor() {
+    this.ui = logseq.settings?.ui ?? UiMode.Kennedy
+    this.dark = DarkMode.Auto
+  }
 }
 
 type Action =
@@ -48,18 +53,21 @@ interface ExportEvent {
 }
 
 class ConfigManager {
-  urlConfig: UrlConfig = {
-    ui: UiMode.Kennedy,
-    dark: DarkMode.Auto,
-    embed: '1',
-    proto: 'json',
-    spin: '1'
-  }
+  // urlConfig: UrlConfig = {
+  //   ui: UiMode.Kennedy,
+  //   dark: DarkMode.Auto,
+  //   embed: '1',
+  //   proto: 'json',
+  //   spin: '1'
+  // }
 
   constructor(private baseUrl: string) {}
 
-  get url() {
-    const urlParams = new URLSearchParams(this.urlConfig as any)
+  async getUrl() {
+    const urlConfig = new UrlConfig()
+    const { preferredThemeMode } = await logseq.App.getUserConfigs()
+    urlConfig.dark = preferredThemeMode === 'light' ? DarkMode.Off : DarkMode.On
+    const urlParams = new URLSearchParams(urlConfig as any)
     return `${this.baseUrl}?${urlParams.toString()}`
   }
 }
@@ -149,17 +157,17 @@ export class DrawioManager extends EventEmitter {
     this.iframeEl?.removeAttribute('src')
   }
 
-  showFrame() {
+  async showFrame() {
     if (!this.iframeEl) this.createFrame()
     const wrap = document.getElementById('iframe-wrap')
     wrap?.style.setProperty('display', 'block')
     logseq.App.queryElementRect('#head').then(rect => wrap?.style.setProperty('--iframe-top', `${rect?.height ?? 0}px`))
     this.iframeEl?.removeAttribute('style')
-    this.iframeEl?.setAttribute('src', this.configManager.url)
+    this.iframeEl?.setAttribute('src', await this.configManager.getUrl())
   }
 
   async open(xml?: string) {
-    this.showFrame()
+    await this.showFrame()
     await this.waitFor('init')
     this.sendAction({ action: 'load', xml: xml ?? '' })
   }

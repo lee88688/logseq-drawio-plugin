@@ -2,7 +2,6 @@ import '@logseq/libs'
 import './styles/index.css'
 import provideCss from './styles/provide.css?inline'
 import { DrawioManager } from './DrawioManager'
-
 import { logseq as PL } from '../package.json'
 import {
   createFile,
@@ -15,6 +14,7 @@ import {
 } from './utils'
 import { PreviewManager } from './PreviewManager'
 import { SpinnerManager } from './SpinnerManager'
+import { settings } from './settings'
 
 // @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args)
@@ -47,26 +47,6 @@ function main() {
     logseq.setMainUIInlineStyle({
       zIndex: 100
     })
-
-    // const openIconName = 'drawio-plugin-open'
-
-    // logseq.provideStyle(css`
-    //   .${openIconName} {
-    //     opacity: 0.55;
-    //     font-size: 20px;
-    //     margin-top: 4px;
-    //   }
-    //
-    //   .${openIconName}:hover {
-    //     opacity: 0.9;
-    //   }
-    // `)
-    // logseq.App.registerUIItem('toolbar', {
-    //   key: openIconName,
-    //   template: `
-    //   <div data-on-click="show" class="${openIconName}">⚙️</div>
-    // `
-    // })
 
     logseq.provideStyle(provideCss)
 
@@ -125,5 +105,5 @@ function main() {
 if (import.meta.env.VITE_IS_MOCK) {
   main()
 } else {
-  logseq.ready(main).catch(console.error)
+  logseq.useSettingsSchema(settings).ready(main).catch(console.error)
 }
