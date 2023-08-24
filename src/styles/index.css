@@ -17,8 +17,8 @@ iframe {
 }
 
 .window-control {
-    @apply flex flex-row justify-end items-stretch;
-    background-color: #f1f3f4;
+    @apply flex flex-row justify-end items-stretch bg-[#f1f3f4] dark:bg-[#363238];
+    /* background-color: #f1f3f4; */
     height: var(--iframe-top);
     -webkit-app-region: drag;
 }
