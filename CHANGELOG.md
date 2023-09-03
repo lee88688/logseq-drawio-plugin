@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.1.1...v1.2.0) (2023-09-03)
+
+
+### Features
+
+* dark mode support, multiple drawio theme support and remove top blank bar. [#4](https://github.com/lee88688/logseq-drawio-plugin/issues/4) [#5](https://github.com/lee88688/logseq-drawio-plugin/issues/5) ([c9bf287](https://github.com/lee88688/logseq-drawio-plugin/commit/c9bf2873e3b5c2ba76d10f88eb944d1b20c854a2))
+
 ## [1.1.1](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.1.0...v1.1.1) (2023-07-12)
 
 
