@@ -66,7 +66,8 @@ class ConfigManager {
   async getUrl() {
     this.urlConfig = new UrlConfig()
     const { preferredThemeMode } = await logseq.App.getUserConfigs()
-    this.urlConfig.dark = preferredThemeMode === 'light' ? DarkMode.Off : DarkMode.On
+    this.urlConfig.dark =
+      preferredThemeMode === 'light' ? DarkMode.Off : DarkMode.On
     const urlParams = new URLSearchParams(this.urlConfig as any)
     return `${this.baseUrl}?${urlParams.toString()}`
   }
@@ -161,7 +162,10 @@ export class DrawioManager extends EventEmitter {
     if (!this.iframeEl) this.createFrame()
     const wrap = document.getElementById('iframe-wrap')
     wrap?.style.setProperty('display', 'block')
-    logseq.App.queryElementRect('#head').then(rect => wrap?.style.setProperty('--iframe-top', `${rect?.height ?? 0}px`))
+    // logseq.App.queryElementRect('#head').then((rect) => {
+    //   // logseq.setMainUIInlineStyle({ top: `${rect?.top ?? 0}px` })
+    //   wrap?.style.setProperty('--iframe-top', `${rect?.height ?? 0}px`)
+    // })
     this.iframeEl?.removeAttribute('style')
     this.iframeEl?.setAttribute('src', await this.configManager.getUrl())
     if (this.configManager.urlConfig.dark === DarkMode.On) {
