@@ -1,4 +1,5 @@
 import '@logseq/libs'
+import { encode } from 'js-base64'
 import './styles/index.css'
 import provideCss from './styles/provide.css?inline'
 import { DrawioManager } from './DrawioManager'
@@ -62,6 +63,9 @@ function main() {
       if (type !== ':drawio') return
 
       const svg = await storage.getItem(fileName)
+      const simplifiedSvg = svg?.replace(/content=\".*?\"/, '')
+      const base64Svg = encode(simplifiedSvg ?? '')
+      const svgImg = `<img style="background-color: white;" src="data:image/svg+xml;base64,${base64Svg}">`
 
       return logseq.provideUI({
         key: fileName,
@@ -69,7 +73,7 @@ function main() {
         reset: true,
         template: `
 <div class="drawio-plugin__preview">
-  ${svg}
+  ${svgImg}
   <div class="overlay"></div>
   <div class="drawio-plugin__toolbar">
     <div class="drawio-plugin__toolbar-title"></div>
