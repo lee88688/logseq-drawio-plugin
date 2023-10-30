@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.2.0...v1.3.0) (2023-10-30)
+
+
+### Features
+
+* update drawio version ([#9](https://github.com/lee88688/logseq-drawio-plugin/issues/9)) ([d7719d3](https://github.com/lee88688/logseq-drawio-plugin/commit/d7719d373a910e54f73be25197699e5dad919854))
+
 # [1.2.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.1.1...v1.2.0) (2023-09-03)
 
 
