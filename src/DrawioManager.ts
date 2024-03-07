@@ -25,6 +25,7 @@ class UrlConfig {
   embed = '1'
   proto = 'json'
   spin = '1'
+  libraries = '1'
 
   constructor() {
     this.ui = logseq.settings?.ui ?? UiMode.Kennedy
@@ -53,13 +54,7 @@ interface ExportEvent {
 }
 
 class ConfigManager {
-  urlConfig: UrlConfig = {
-    ui: UiMode.Kennedy,
-    dark: DarkMode.Auto,
-    embed: '1',
-    proto: 'json',
-    spin: '1'
-  }
+  urlConfig = new UrlConfig()
 
   constructor(private baseUrl: string) {}
 
