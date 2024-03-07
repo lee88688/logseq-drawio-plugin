@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.3.0...v1.4.0) (2024-03-07)
+
+
+### Features
+
+* enable import or export libraries [#15](https://github.com/lee88688/logseq-drawio-plugin/issues/15) ([e18f8bf](https://github.com/lee88688/logseq-drawio-plugin/commit/e18f8bfb4b99949701c2a8aa6d73f69641332dc7))
+
 # [1.3.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.2.0...v1.3.0) (2023-10-30)
 
 
