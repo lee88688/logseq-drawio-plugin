@@ -13,6 +13,7 @@
     "@logseq/libs": "^0.0.14",
     "eventemitter3": "^5.0.1",
     "js-base64": "^3.7.5",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -21,6 +22,7 @@
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "10.0.3",
+    "@types/lodash": "^4.17.0",
     "@types/node": "18.16.8",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",

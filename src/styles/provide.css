@@ -46,5 +46,12 @@
 .drawio-plugin__toolbar-actions button {
     display: inline-flex;
     cursor: pointer;
+    width: 18px;
+    height: 18px;
     @apply mx-1;
+}
+
+.drawio-plugin__toolbar-actions button > svg {
+    width: 100%;
+    height: 100%;
 }

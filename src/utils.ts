@@ -1,7 +1,7 @@
-import { BlockCommandCallback } from '@logseq/libs/dist/LSPlugin'
 import { DrawioManager, PublicEvents } from './DrawioManager'
 import { PreviewManager } from './PreviewManager'
 import { SpinnerManager } from './SpinnerManager'
+import unescape from 'lodash/unescape'
 
 export interface LogseqDomEvent {
   id: string
@@ -197,24 +197,40 @@ export const preview = async (
   })
 }
 
-export const download = async (e: LogseqDomEvent) => {
+export const download = async (e: LogseqDomEvent, type: 'svg' | 'origin') => {
   const storage = logseq.Assets.makeSandboxStorage()
 
   const fileName = e.dataset.fileName
 
-  const svg = await storage.getItem(fileName)
+  const content = await storage.getItem(fileName)
 
-  if (!svg) {
+  if (!content) {
     logseq.UI.showMsg(`file(${fileName}) is not found!`, 'error')
     return
   }
 
+  let file: Blob
+  if (type === 'svg') {
+    file = new Blob([content])
+  } else {
+    const match = content.match(/content="(.*?)"/)
+    if (!match) {
+      logseq.UI.showMsg(
+        `original drawio file can't be extracted from logseq file asset.`,
+        'error'
+      )
+      return
+    }
+    file = new Blob([unescape(match[1])])
+  }
+
   // download
-  const file = new Blob([svg])
+  const newFileName =
+    type === 'svg' ? fileName : fileName.replace(/\.svg$/, '.drawio')
   const url = URL.createObjectURL(file)
   const a = document.createElement('a')
   a.href = url
-  a.download = fileName
+  a.download = newFileName
   a.click()
   setTimeout(() => {
     URL.revokeObjectURL(url)
