@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.4.0...v1.5.0) (2024-03-14)
+
+
+### Features
+
+* new features ([#17](https://github.com/lee88688/logseq-drawio-plugin/issues/17)) ([6d98cb4](https://github.com/lee88688/logseq-drawio-plugin/commit/6d98cb4969dfeda7602606fbd1aa88e6d2af7b85))
+
 # [1.4.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.3.0...v1.4.0) (2024-03-07)
 
 
