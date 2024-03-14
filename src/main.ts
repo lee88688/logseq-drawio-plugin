@@ -17,9 +17,6 @@ import { PreviewManager } from './PreviewManager'
 import { SpinnerManager } from './SpinnerManager'
 import { settings } from './settings'
 
-// @ts-expect-error
-const css = (t, ...args) => String.raw(t, ...args)
-
 const pluginId = PL.id
 
 let drawioManager: DrawioManager

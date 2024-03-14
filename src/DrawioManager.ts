@@ -8,6 +8,14 @@ export enum UiMode {
   Simple = 'simple'
 }
 
+// this enum is used for setting
+export enum SettingDarkMode {
+  Off = 'off',
+  On = 'on',
+  Auto = 'auto'
+}
+
+// this enum is used for drawio url config
 enum DarkMode {
   Off = '0',
   On = '1',
@@ -29,7 +37,13 @@ class UrlConfig {
 
   constructor() {
     this.ui = logseq.settings?.ui ?? UiMode.Kennedy
-    this.dark = DarkMode.Auto
+    const settingDarkMode = logseq.settings?.darkMode ?? SettingDarkMode.Auto
+    this.dark =
+      settingDarkMode === SettingDarkMode.On
+        ? DarkMode.On
+        : settingDarkMode === SettingDarkMode.Off
+        ? DarkMode.Off
+        : DarkMode.Auto
   }
 }
 
@@ -62,7 +76,11 @@ class ConfigManager {
     this.urlConfig = new UrlConfig()
     const { preferredThemeMode } = await logseq.App.getUserConfigs()
     this.urlConfig.dark =
-      preferredThemeMode === 'light' ? DarkMode.Off : DarkMode.On
+      this.urlConfig.dark === DarkMode.Auto
+        ? preferredThemeMode === 'light'
+          ? DarkMode.Off
+          : DarkMode.On
+        : this.urlConfig.dark
     const urlParams = new URLSearchParams(this.urlConfig as any)
     return `${this.baseUrl}?${urlParams.toString()}`
   }
