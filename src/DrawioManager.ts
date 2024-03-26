@@ -103,7 +103,6 @@ export class DrawioManager extends EventEmitter {
       // pass
     }
 
-    console.log(json)
     this.messageEventEmitter.emit(json.event, json)
   }
 
