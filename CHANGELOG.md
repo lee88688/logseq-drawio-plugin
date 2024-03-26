@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.5.0...v1.6.0) (2024-03-26)
+
+
+### Features
+
+* add copy image button on inline preview ([#19](https://github.com/lee88688/logseq-drawio-plugin/issues/19)) ([c3b2a6a](https://github.com/lee88688/logseq-drawio-plugin/commit/c3b2a6a9fbf27618321677d8f02758f18557c2c3))
+
 # [1.5.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.4.0...v1.5.0) (2024-03-14)
 
 
