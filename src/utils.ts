@@ -2,6 +2,7 @@ import { DrawioManager, PublicEvents } from './DrawioManager'
 import { PreviewManager } from './PreviewManager'
 import { SpinnerManager } from './SpinnerManager'
 import unescape from 'lodash/unescape'
+import { encode } from 'js-base64'
 
 export interface LogseqDomEvent {
   id: string
@@ -236,4 +237,58 @@ export const download = async (e: LogseqDomEvent, type: 'svg' | 'origin') => {
     URL.revokeObjectURL(url)
     a.href = ''
   })
+}
+
+export const copyImage = async (e: LogseqDomEvent) => {
+  const storage = logseq.Assets.makeSandboxStorage()
+
+  const fileName = e.dataset.fileName
+
+  const content = await storage.getItem(fileName)
+
+  if (!content) {
+    logseq.UI.showMsg(`file(${fileName}) is not found!`, 'error')
+    return
+  }
+
+  const base64Svg = encode(content ?? '')
+  const img = document.createElement('img')
+  const { width, height } = await new Promise<{
+    width: number
+    height: number
+  }>((resolve) => {
+    img.onload = () => {
+      const width = img.naturalWidth
+      const height = img.naturalHeight
+      resolve({ width, height })
+    }
+    img.src = `data:image/svg+xml;base64,${base64Svg}`
+  })
+
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+  // when use ctx.clearRect and export to clipboard, the background is black.
+  ctx.fillStyle = '#FFFFFF'
+  ctx.fillRect(0, 0, width, height)
+  ctx.drawImage(img, 0, 0)
+  const type = 'image/png'
+  const blob = await new Promise<Blob | null>((resolve) =>
+    canvas.toBlob(resolve, type)
+  )
+  if (!blob) return
+
+  // only showing ui and focus can use clipboard api
+  await logseq.showMainUI({ autoFocus: true })
+
+  try {
+    await navigator.clipboard.write([new ClipboardItem({ [type]: blob })])
+    logseq.UI.showMsg('Copied to clipboard!', 'success')
+  } catch (e) {
+    logseq.UI.showMsg(`Failed(${String(e)}) to copy to clipboard!`, 'error')
+  } finally {
+    logseq.hideMainUI()
+  }
 }

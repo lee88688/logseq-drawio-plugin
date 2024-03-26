@@ -28,7 +28,6 @@ export class PreviewManager extends EventEmitter {
   }
 
   private handleMouseMove = (e: MouseEvent) => {
-    console.log('mouse move', e)
     const { movementX, movementY } = e
     this.moveX = this.moveX + movementX / this.scale
     this.moveY = this.moveY + movementY / this.scale
