@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.6.0...v1.7.0) (2024-07-17)
+
+
+### Features
+
+* update drawio version and optimizing delete logic ([#23](https://github.com/lee88688/logseq-drawio-plugin/issues/23)) ([acd7276](https://github.com/lee88688/logseq-drawio-plugin/commit/acd72763745345c543336117a8a6ae8fea904c4c))
+
 # [1.6.0](https://github.com/lee88688/logseq-drawio-plugin/compare/v1.5.0...v1.6.0) (2024-03-26)
 
 
