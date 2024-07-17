@@ -167,7 +167,23 @@ export const removeFile = async (e: LogseqDomEvent) => {
   const fileName = e.dataset.fileName
   const uuid = e.dataset.uuid
 
-  await storage.removeItem(fileName)
+  let isUnique = true
+  try {
+    const arr = await logseq.DB.datascriptQuery(
+      `[:find (pull ?b [*]) :where [?b :block/content ?content] [(clojure.string/includes? ?content "${createRenderer(fileName)}")]]`
+    )
+    if (arr.length > 1) {
+      isUnique = false
+    }
+  } catch (e) {
+    logseq.UI.showMsg(`Failed(${String(e)}) to query block!`, 'error')
+    return
+  }
+
+  if (isUnique) {
+    console.log('remove file', fileName)
+    await storage.removeItem(fileName)
+  }
 
   const block = await logseq.Editor.getBlock(uuid)
   if (!block) return
